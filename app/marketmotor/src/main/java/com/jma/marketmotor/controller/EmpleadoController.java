@@ -5,8 +5,6 @@ import com.jma.marketmotor.api.empleado.EmpleadoCommandInsert;
 import com.jma.marketmotor.api.empleado.EmpleadoCommandUpdate;
 import com.jma.marketmotor.dto.EmpleadoDto;
 import com.jma.marketmotor.dto.UsuarioDto;
-import com.jma.marketmotor.entity.EmpleadoEntity;
-import com.jma.marketmotor.entity.UsuarioEntity;
 import com.jma.marketmotor.mapping.EmpleadoMapper;
 import com.jma.marketmotor.service.EmpleadoService;
 import com.jma.marketmotor.service.UsuarioService;
@@ -107,13 +105,6 @@ public class EmpleadoController {
                empleadoToList.setUsuarioDto(usuariosIterator.next());
                empleadosToTransferData.add(empleadoToList);
             }
-
-           //Segunda manera de setear el usuario al empleado
-           /* for (int i = 0; i < empleadosMapeados.size(); i++) {
-                empleadosMapeados.get(i).setUsuario(usuariosObtenidosPorId.get(i));
-                System.out.println("L");
-                //String processedData = String.format("%s: %s", usuariosIterator.next().getId(), empleadosIterator.next().getNombre());
-            } */
 
             List<EmpleadoDto> empleadosGuardados = empleadoService.guardarTodos(empleadosToTransferData);
             return ResponseEntity.ok(empleadosGuardados);

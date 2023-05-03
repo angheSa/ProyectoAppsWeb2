@@ -2,7 +2,6 @@ package com.jma.marketmotor.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jma.marketmotor.utils.EstadoD;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -20,7 +20,7 @@ public class RolMapper {
     public static RolEntity mapToEntity(RolDto rolDto){
         RolEntity rolEntity = new RolEntity();
         rolEntity.setNombre(rolDto.getNombre());
-        rolEntity.declararDisponibilidad(EstadoD.ACTIVO);
+        rolEntity.setEstado(rolDto.getEstado());
         return rolEntity;
     }
 
@@ -28,6 +28,7 @@ public class RolMapper {
     public static RolDto mapFromCommandInsertToDto(RolCommandInsert rolCommandInsert){
         RolDto rolDto = new RolDto();
         rolDto.setNombre(rolCommandInsert.getNombre());
+        rolDto.declararDisponibilidad(EstadoD.ACTIVO);
         return rolDto;
     }
 

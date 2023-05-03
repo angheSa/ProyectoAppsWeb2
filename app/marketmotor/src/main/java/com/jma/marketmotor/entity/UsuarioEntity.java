@@ -45,4 +45,6 @@ public class UsuarioEntity {
     @OneToOne(mappedBy = "usuario")
     private EmpleadoEntity empleado;
 
+    @Column(name = "estado")
+    private boolean estado;
 }

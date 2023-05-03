@@ -2,7 +2,6 @@ package com.jma.marketmotor.controller;
 
 import com.jma.marketmotor.api.usuario.UsuarioCommandInsert;
 import com.jma.marketmotor.dto.UsuarioDto;
-import com.jma.marketmotor.entity.UsuarioEntity;
 import com.jma.marketmotor.mapping.UsuarioMapper;
 import com.jma.marketmotor.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;

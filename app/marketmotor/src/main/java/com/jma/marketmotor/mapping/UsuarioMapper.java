@@ -5,6 +5,7 @@ import com.jma.marketmotor.api.usuario.UsuarioCommandInsert;
 import com.jma.marketmotor.api.usuario.UsuarioCommandUpdate;
 import com.jma.marketmotor.dto.UsuarioDto;
 import com.jma.marketmotor.entity.UsuarioEntity;
+import com.jma.marketmotor.utils.EstadoD;
 
 public class UsuarioMapper {
 
@@ -12,7 +13,7 @@ public class UsuarioMapper {
 
         UsuarioEntity usuarioEntity = new UsuarioEntity();
         usuarioEntity.setAlias(usuarioDto.getAlias());
-
+        usuarioEntity.setEstado(usuarioDto.isEstado());
         return usuarioEntity;
     }
 
@@ -23,12 +24,14 @@ public class UsuarioMapper {
         usuarioDto.setAlias(usuarioEntity.getAlias());
         usuarioDto.setCreadoEn(usuarioEntity.getCreadoEn());
         usuarioDto.setActualizadoEn(usuarioEntity.getActualizadoEn());
+        usuarioDto.setEstado(usuarioEntity.isEstado());
         return usuarioDto;
     }
 
     public static UsuarioDto mapFromCommandInsertToDto(UsuarioCommandInsert usuarioCommandInsert){
         UsuarioDto usuarioDto = new UsuarioDto();
         usuarioDto.setAlias(usuarioCommandInsert.getAlias());
+        usuarioDto.declararDisponibilidad(EstadoD.ACTIVO);
         return usuarioDto;
     }
 

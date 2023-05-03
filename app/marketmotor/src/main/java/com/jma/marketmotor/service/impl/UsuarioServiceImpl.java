@@ -1,9 +1,7 @@
 package com.jma.marketmotor.service.impl;
 
-import com.jma.marketmotor.dto.EmpleadoDto;
 import com.jma.marketmotor.dto.UsuarioDto;
 import com.jma.marketmotor.entity.UsuarioEntity;
-import com.jma.marketmotor.mapping.EmpleadoMapper;
 import com.jma.marketmotor.mapping.UsuarioMapper;
 import com.jma.marketmotor.repository.UsuarioRepository;
 import com.jma.marketmotor.service.UsuarioService;
