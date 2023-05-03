@@ -1,31 +1,25 @@
-package com.jma.marketmotor.dto;
+package com.jma.marketmotor.entity;
 
 import com.jma.marketmotor.utils.EstadoD;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
+@Entity
+@Table(name = "tb_rol")
+@Data
+@NoArgsConstructor
+public class RolEntity {
 
-@Getter
-@Setter
-public class EmpleadoDto implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nombre_rol")
     private String nombre;
 
-    private String apellidoPat;
-
-    private String apellidoMat;
-
-    private String telefono;
-
-    private String correo;
-
+    @Column(name = "estado")
     private boolean estado;
-
-    private UsuarioDto usuarioDto;
-
     public void declararDisponibilidad(EstadoD estadoD){
         switch (estadoD){
             case ACTIVO:
@@ -34,4 +28,5 @@ public class EmpleadoDto implements Serializable {
                 setEstado(false);break;
         }
     }
+
 }

@@ -3,8 +3,12 @@ package com.jma.marketmotor.service.impl;
 import com.jma.marketmotor.api.EmpleadoResponse;
 import com.jma.marketmotor.dto.EmpleadoDto;
 import com.jma.marketmotor.entity.EmpleadoEntity;
+import com.jma.marketmotor.entity.RolEntity;
+import com.jma.marketmotor.entity.UsuarioEntity;
 import com.jma.marketmotor.mapping.EmpleadoMapper;
+import com.jma.marketmotor.mapping.RolMapper;
 import com.jma.marketmotor.repository.EmpleadoRepository;
+import com.jma.marketmotor.repository.UsuarioRepository;
 import com.jma.marketmotor.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,41 +18,21 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class EmpleadoServiceImpl implements EmpleadoService<EmpleadoEntity> {
+public class EmpleadoServiceImpl implements EmpleadoService<EmpleadoDto> {
 
     private final EmpleadoRepository empleadoRepository;
+    private final UsuarioRepository usuarioRepository;
+
     @Autowired
-    public EmpleadoServiceImpl(EmpleadoRepository empleadoRepository){
+    public EmpleadoServiceImpl(EmpleadoRepository empleadoRepository,
+                               UsuarioRepository usuarioRepository){
         this.empleadoRepository = empleadoRepository;
-    }
-    @Override
-    public EmpleadoEntity guardar(EmpleadoEntity object) {
-        return empleadoRepository.save(object);
+        this.usuarioRepository = usuarioRepository;
     }
 
-    @Override
-    public List<EmpleadoEntity> obtenerTodos() {
-        return empleadoRepository.findAll();
-    }
-
-    @Override
-    public void eliminar(Object id) {
-        EmpleadoEntity empleadoEntity = empleadoRepository.findById((Long)id).orElse(new EmpleadoEntity());
-
-        empleadoRepository.delete(empleadoEntity);
-    }
-
-    @Override
-    public EmpleadoEntity obtenerPorId(Object id) {
-
-        if(empleadoRepository.findById((Long)id).isEmpty()){
-            return new EmpleadoEntity();
-        }
-        return empleadoRepository.findById((Long)id).get();
-
-    }
 
 
     @Override
@@ -77,7 +61,46 @@ public class EmpleadoServiceImpl implements EmpleadoService<EmpleadoEntity> {
     }
 
     @Override
-    public List<EmpleadoEntity> guardarTodos(List<EmpleadoEntity> list) {
-        return empleadoRepository.saveAll(list);
+    public List<EmpleadoDto> guardarTodos(List<EmpleadoDto> list) {
+        return empleadoRepository.saveAll(list.stream().map(EmpleadoMapper::mapToEntity).collect(Collectors.toList())).stream().map(EmpleadoMapper::mapToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public EmpleadoDto guardar(EmpleadoDto object) {
+
+        UsuarioEntity usuarioEntity = usuarioRepository.findById(object.getUsuarioDto().getId()).orElse(null);
+        //validación para cortar flujo
+        EmpleadoEntity empleadoEntityObt = empleadoRepository.save(EmpleadoMapper.mapToEntity(object));
+        empleadoEntityObt.setUsuario(usuarioEntity);
+
+        return EmpleadoMapper.mapToDto(empleadoEntityObt);
+    }
+
+    @Override
+    public List<EmpleadoDto> obtenerTodos() {
+        return empleadoRepository.findAll().stream().map(EmpleadoMapper::mapToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public String eliminar(Object id) {
+        try{
+            empleadoRepository.deleteById((Long)id);
+            return "Fue eliminado con éxito";
+        }catch (Exception ex){
+            return "No se pudo eliminar, se encontró un error";
+        }
+    }
+
+    @Override
+    public EmpleadoDto obtenerPorId(Object id) {
+        return empleadoRepository.findById((Long)id).map(EmpleadoMapper::mapToDto).orElse(new EmpleadoDto());
+    }
+
+    @Override
+    public EmpleadoDto actualizar(EmpleadoDto object) {
+        EmpleadoEntity empleadoEntity = EmpleadoMapper.mapToEntity(object);
+        empleadoEntity.setId(object.getId());
+
+        return EmpleadoMapper.mapToDto(empleadoRepository.save(empleadoEntity));
     }
 }

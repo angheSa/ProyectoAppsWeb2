@@ -1,5 +1,6 @@
 package com.jma.marketmotor.controller;
 
+import com.jma.marketmotor.api.usuario.UsuarioCommandInsert;
 import com.jma.marketmotor.dto.UsuarioDto;
 import com.jma.marketmotor.entity.UsuarioEntity;
 import com.jma.marketmotor.mapping.UsuarioMapper;
@@ -14,31 +15,31 @@ import java.util.List;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
-    private final UsuarioService<UsuarioEntity> usuarioService;
+    private final UsuarioService<UsuarioDto> usuarioService;
 
     @Autowired
-    public UsuarioController(UsuarioService<UsuarioEntity> usuarioService){
+    public UsuarioController(UsuarioService<UsuarioDto> usuarioService){
         this.usuarioService = usuarioService;
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioEntity>> obtenerTodos(){
+    public ResponseEntity<List<UsuarioDto>> obtenerTodos(){
         return ResponseEntity.ok(usuarioService.obtenerTodos());
     }
 
     @PostMapping()
-    public ResponseEntity<UsuarioEntity> guardar(@RequestBody UsuarioDto usuarioDto){
+    public ResponseEntity<UsuarioDto> guardar(@RequestBody UsuarioCommandInsert usuarioCommandInsert){
 
-        UsuarioEntity usuarioGuardado = usuarioService.guardar(UsuarioMapper.mapToEntity(usuarioDto));
+        UsuarioDto usuarioGuardado = usuarioService.guardar(UsuarioMapper.mapFromCommandInsertToDto(usuarioCommandInsert));
         return ResponseEntity.ok(usuarioGuardado);
 
     }
 
     @PostMapping("/guardarTodos")
-    public ResponseEntity<List<UsuarioEntity>> guardarTodos(@RequestBody List<UsuarioDto> usuariosDto){
+    public ResponseEntity<List<UsuarioDto>> guardarTodos(@RequestBody List<UsuarioCommandInsert> UsuariosCommand){
 
-        List<UsuarioEntity> usuariosMappeados = usuariosDto.stream().map(UsuarioMapper::mapToEntity).toList();
-        List<UsuarioEntity> usuariosGuardados = usuarioService.guardarTodos(usuariosMappeados);
+        List<UsuarioDto> usuariosMappeados = UsuariosCommand.stream().map(UsuarioMapper::mapFromCommandInsertToDto).toList();
+        List<UsuarioDto> usuariosGuardados = usuarioService.guardarTodos(usuariosMappeados);
 
         return ResponseEntity.ok(usuariosGuardados);
 
