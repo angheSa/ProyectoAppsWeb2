@@ -1,18 +1,18 @@
 package com.jma.marketmotor.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.management.relation.Role;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_permiso")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class PermisoEntity {
 
     @Id
@@ -26,7 +26,12 @@ public class PermisoEntity {
     @Column(name = "estaod")
     private boolean estado;
 
-    @ManyToMany(mappedBy = "permisos")
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }, mappedBy = "permisos")
+    @JsonIgnore
     private Set<RolEntity> roles = new HashSet<>();
 
 

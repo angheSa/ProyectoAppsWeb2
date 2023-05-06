@@ -5,6 +5,7 @@ import com.jma.marketmotor.entity.ProductoEntity;
 import com.jma.marketmotor.mapping.ProductoMapper;
 import com.jma.marketmotor.repository.ProductoRepository;
 import com.jma.marketmotor.service.ProductoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class ProductoServiceImpl implements ProductoService<ProductoDto>{
 
     private final ProductoRepository productoRepository;
 
+    @Autowired
     public ProductoServiceImpl(ProductoRepository productoRepository) { this. productoRepository = productoRepository;}
 
     @Override

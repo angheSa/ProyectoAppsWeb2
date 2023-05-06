@@ -31,8 +31,6 @@ public class EmpleadoServiceImpl implements EmpleadoService<EmpleadoDto> {
         this.usuarioRepository = usuarioRepository;
     }
 
-
-
     @Override
     public EmpleadoResponse obtenerTodosP(int pageNo, int pageSize, String sortBy, String sortDir) {
 

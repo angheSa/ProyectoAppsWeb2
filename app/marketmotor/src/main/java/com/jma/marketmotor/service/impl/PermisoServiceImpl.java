@@ -27,6 +27,10 @@ public class PermisoServiceImpl implements PermisoService<PermisoDto> {
     public PermisoDto guardar(PermisoDto object) {
         PermisoEntity permisoEntity = PermisoMapper.mapToEntity(object);
 
+        if(object.getId()!= null){
+            permisoEntity.setId(object.getId());
+        }
+
         return PermisoMapper.mapToDto(permisoRepository.save(permisoEntity));
     }
 

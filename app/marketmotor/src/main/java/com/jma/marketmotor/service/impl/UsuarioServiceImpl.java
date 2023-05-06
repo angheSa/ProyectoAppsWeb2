@@ -5,6 +5,7 @@ import com.jma.marketmotor.entity.UsuarioEntity;
 import com.jma.marketmotor.mapping.UsuarioMapper;
 import com.jma.marketmotor.repository.UsuarioRepository;
 import com.jma.marketmotor.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class UsuarioServiceImpl implements UsuarioService<UsuarioDto> {
 
     private final UsuarioRepository usuarioRepository;
 
+    @Autowired
     public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }

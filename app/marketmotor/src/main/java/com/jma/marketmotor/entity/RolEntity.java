@@ -2,8 +2,7 @@ package com.jma.marketmotor.entity;
 
 import com.jma.marketmotor.utils.EstadoD;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,8 +10,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_rol")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class RolEntity {
 
     @Id
@@ -27,7 +28,11 @@ public class RolEntity {
     private boolean estado;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(
             name = "tb_permiso_rol",
             joinColumns = {@JoinColumn(name = "id_rol")},

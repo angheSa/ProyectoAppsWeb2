@@ -16,10 +16,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/productos")
+@RequestMapping("/productos")
 public class ProductoController {
 
-    ProductoService<ProductoDto> productoService;
+    private final ProductoService<ProductoDto> productoService;
+
+    @Autowired
+    public ProductoController(ProductoService<ProductoDto> productoService){
+        this.productoService = productoService;
+    }
 
 
     @PostMapping
@@ -47,7 +52,7 @@ public class ProductoController {
         return ResponseEntity.ok(productoDtoObt);
     }
 
-    @PatchMapping(name = "/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<String> desactivar(@PathVariable Long id){
         try {
             ProductoDto producto = productoService.obtenerPorId(id);

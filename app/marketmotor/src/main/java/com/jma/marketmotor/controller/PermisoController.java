@@ -51,7 +51,7 @@ public class PermisoController {
     }
 
 
-    @PatchMapping(name = "/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<String> desactivar(@PathVariable Long id){
 
         try{
@@ -67,7 +67,7 @@ public class PermisoController {
         }
     }
 
-    @DeleteMapping(name = "/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Long id){
 
         String respuesta = permisoService.eliminar(id);

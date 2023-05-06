@@ -12,6 +12,8 @@ import com.jma.marketmotor.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +25,7 @@ public class RolServiceImpl implements RolService<RolDto> {
     private final PermisoRepository permisoRepository;
 
     @Autowired
-    public RolServiceImpl(RolRepository rolRepository,PermisoRepository permisoRepository){
+    public RolServiceImpl(RolRepository rolRepository, PermisoRepository permisoRepository) {
         this.rolRepository = rolRepository;
         this.permisoRepository = permisoRepository;
     }
@@ -48,50 +50,46 @@ public class RolServiceImpl implements RolService<RolDto> {
 
     @Override
     public List<RolDto> obtenerTodos() {
-        return rolRepository.findAll().stream().map(RolMapper::mapToDto).collect(Collectors.toList());
+
+        List<RolEntity> rolEntities = rolRepository.findAll();
+
+        return getRolDtos(rolEntities);
     }
 
     @Override
     public String eliminar(Object id) {
-        try{
-            rolRepository.deleteById((Long)id);
+        try {
+            rolRepository.deleteById((Long) id);
             return "Fue eliminado con éxito";
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return "No se pudo eliminar, se encontró un error";
         }
     }
 
     @Override
     public RolDto obtenerPorId(Object id) {
-        return rolRepository.findById((Long)id).map(RolMapper::mapToDto).orElse(null);
+        return rolRepository.findById((Long) id).map(RolMapper::mapToDto).orElse(null);
     }
 
     @Override
-    public PermisoDto definirPermiso(Long id, PermisoDto permiso){
+    public PermisoDto definirPermiso(Long idRol, Long idPermiso) {
 
-        return rolRepository.findById(id).map(rol -> {
-            long permisoId = permiso.getId();
+        return rolRepository.findById(idRol).map(rolInMap -> {
 
-            // tag is existed
-            if (permisoId != 0L) {
-                PermisoDto _permiso = PermisoMapper.mapToDto(permisoRepository.findById(permisoId)
-                        .orElseThrow(() -> new RuntimeException("Not found Tag with id = " + permisoId)));
-                rol.agregarPermiso(PermisoMapper.mapToEntity(_permiso));
-                rolRepository.save(rol);
-                return _permiso;
-            }
+            PermisoDto _permiso = PermisoMapper.mapToDto(permisoRepository.findById(idPermiso)
+                    .orElseThrow(() -> new RuntimeException("No fue encontrado el permiso    = " + idPermiso)));
+            PermisoEntity permisoEntityMapped = PermisoMapper.mapToEntity(_permiso);
+            permisoEntityMapped.setId(_permiso.getId());
+            rolInMap.agregarPermiso(permisoEntityMapped);
+            rolRepository.save(rolInMap);
+            return _permiso;
 
-            // add and create new Tag
-            rol.agregarPermiso(PermisoMapper.mapToEntity(permiso));
-            PermisoEntity permisoEntity = permisoRepository.save(PermisoMapper.mapToEntity(permiso));
-
-            return PermisoMapper.mapToDto(permisoEntity);
-        }).orElseThrow(() -> new RuntimeException("Not found Tutorial with id = " + id));
+        }).orElseThrow(() -> new RuntimeException("No fue encontrado el rol = " + idRol));
     }
 
 
     @Override
-    public RolDto removerPermiso(Long idRol,Long idPermiso){
+    public RolDto removerPermiso(Long idRol, Long idPermiso) {
         RolEntity rol = rolRepository.findById(idRol)
                 .orElseThrow(() -> new RuntimeException("Not found Tutorial with id = " + idRol));
 
@@ -104,9 +102,19 @@ public class RolServiceImpl implements RolService<RolDto> {
     @Override
     public List<RolDto> buscarRolesPorPermisosId(Long permisoId) {
 
-        List<RolEntity> rolEntities = rolRepository.findRolEntitiesByPermisosId(permisoId);
+        List<RolEntity> rolEntities = rolRepository.findRolEntitiesByPermisoId(permisoId);
 
-        return rolEntities.stream().map(RolMapper::mapToDto).collect(Collectors.toList());
+        return getRolDtos(rolEntities);
     }
+    private List<RolDto> getRolDtos(List<RolEntity> rolEntities) {
+        List<RolDto> rolDtos = rolEntities.stream().map(RolMapper::mapToDto).toList();
+
+        for(int i=0;i<rolDtos.size();i++){
+            rolDtos.get(i).setPermisos(rolEntities.get(i).getPermisos().stream().map(PermisoMapper::mapToDto).sorted(Comparator.comparing(PermisoDto::getId)).collect(Collectors.toCollection(LinkedHashSet::new)));
+        }
+
+        return rolDtos;
+    }
+
 
 }

@@ -1,12 +1,10 @@
 package com.jma.marketmotor.controller;
 
-import com.jma.marketmotor.api.permiso.PermisoCommandInsert;
 import com.jma.marketmotor.api.rol.RolCommandInsert;
 import com.jma.marketmotor.api.rol.RolCommandUpdate;
 import com.jma.marketmotor.dto.PermisoDto;
 import com.jma.marketmotor.dto.RolDto;
 import com.jma.marketmotor.mapping.RolMapper;
-import com.jma.marketmotor.repository.PermisoRepository;
 import com.jma.marketmotor.service.PermisoService;
 import com.jma.marketmotor.service.RolService;
 import com.jma.marketmotor.utils.EstadoD;
@@ -18,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/roles")
+@RequestMapping("/roles")
 public class RolController {
 
     private final RolService<RolDto> rolService;
@@ -40,12 +38,20 @@ public class RolController {
 
     }
 
-    @GetMapping
-    public ResponseEntity<RolDto> obtenerPorId(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<RolDto> obtenerPorId(@PathVariable(name = "id") Long id){
 
         RolDto rolDtoObt = rolService.obtenerPorId(id);
 
         return ResponseEntity.ok(rolDtoObt);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<RolDto>> obtenerTodos(){
+
+        List<RolDto> roles = rolService.obtenerTodos();
+
+        return ResponseEntity.ok(roles);
     }
 
     @PutMapping
@@ -57,8 +63,8 @@ public class RolController {
 
     }
 
-    @PatchMapping(name = "/{id}")
-    public ResponseEntity<String> desactivar(@PathVariable Long id){
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> desactivar(@PathVariable(name = "id") Long id){
 
         try{
             RolDto rol = rolService.obtenerPorId(id);
@@ -74,14 +80,14 @@ public class RolController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable Long id) {
+    public ResponseEntity<String> eliminar(@PathVariable(name = "id") Long id) {
         String respuesta = rolService.eliminar(id);
         return ResponseEntity.ok(respuesta);
     }
 
-    @PostMapping("/{id_rol}/permisos")
-    public ResponseEntity<PermisoDto> definirPermiso(@PathVariable(value = "id_rol") Long idRol, @RequestBody PermisoDto permisoRequest) {
-        PermisoDto permisoRolConfigured = rolService.definirPermiso(idRol,permisoRequest);
+    @PostMapping("/{idRol}/permisos/{idPermiso}")
+    public ResponseEntity<PermisoDto> definirPermisoARol(@PathVariable(value = "idRol") Long idRol, @PathVariable(value = "idPermiso") Long idPermiso) {
+        PermisoDto permisoRolConfigured = rolService.definirPermiso(idRol,idPermiso);
         return ResponseEntity.ok(permisoRolConfigured);
     }
 
@@ -94,7 +100,7 @@ public class RolController {
 
     @GetMapping("/permisos/{permisoId}/roles")
     public ResponseEntity<List<RolDto>> obtenerTodosRolesPorPermisoId(@PathVariable(value = "permisoId") Long permisoId) {
-        if (permisoService.obtenerPorId(permisoId)!=null) {
+        if (permisoService.obtenerPorId(permisoId)==null) {
             throw new RuntimeException("No fue encontrado el permiso" + permisoId);
         }
 
@@ -105,14 +111,13 @@ public class RolController {
 
     @GetMapping("/{rolId}/permisos")
     public ResponseEntity<List<PermisoDto>> obtenerTodosPermisosPorRolId(@PathVariable(value = "rolId") Long rolId) {
-        if (rolService.obtenerPorId(rolId)!=null) {
+        if (rolService.obtenerPorId(rolId)==null) {
             throw new RuntimeException("No fue encontrado el rol = " + rolId);
         }
 
         List<PermisoDto> permisosObt = permisoService.buscarPermisosPorRolId(rolId);
         return ResponseEntity.ok(permisosObt);
     }
-
 
 
 
