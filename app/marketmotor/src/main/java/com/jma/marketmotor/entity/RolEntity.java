@@ -42,8 +42,8 @@ public class RolEntity {
         permisoEntity.getRoles().add(this);
     }
 
-    public void removerPermiso(Long permisoId) {
-        PermisoEntity permiso = this.permisos.stream().filter(t -> Objects.equals(t.getId(), permisoId)).findFirst().orElse(null);
+    public void removerPermiso(long permisoId) {
+        PermisoEntity permiso = this.permisos.stream().filter(t -> getId() == permisoId).findFirst().orElse(null);
         if (permiso != null) {
             this.permisos.remove(permiso);
             permiso.getRoles().remove(this);

@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping(name = "/roles")
 public class RolController {
 
-    RolService<RolDto> rolService;
+    private final RolService<RolDto> rolService;
     private final PermisoService<PermisoDto> permisoService;
 
     @Autowired
