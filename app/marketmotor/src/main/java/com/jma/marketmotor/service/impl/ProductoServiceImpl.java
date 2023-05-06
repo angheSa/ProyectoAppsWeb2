@@ -1,0 +1,58 @@
+package com.jma.marketmotor.service.impl;
+
+import com.jma.marketmotor.dto.ProductoDto;
+import com.jma.marketmotor.entity.ProductoEntity;
+import com.jma.marketmotor.mapping.ProductoMapper;
+import com.jma.marketmotor.repository.ProductoRepository;
+import com.jma.marketmotor.service.ProductoService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class ProductoServiceImpl implements ProductoService<ProductoDto>{
+
+    private final ProductoRepository productoRepository;
+
+    public ProductoServiceImpl(ProductoRepository productoRepository) { this. productoRepository = productoRepository;}
+
+    @Override
+    public List<ProductoDto> guardarTodos(List<ProductoDto> list) {
+        return productoRepository.saveAll(list.stream()
+                .map(ProductoMapper::mapToEntity)
+                .collect(Collectors.toList()))
+                .stream().map(ProductoMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductoDto guardar(ProductoDto object) {
+        ProductoEntity productoEntity = productoRepository.save(ProductoMapper.mapToEntity(object));
+
+        return ProductoMapper.mapToDto(productoEntity);
+    }
+
+    @Override
+    public List<ProductoDto> obtenerTodos(){
+        return productoRepository.findAll().stream().map(ProductoMapper::mapToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public String eliminar(Object id) {
+        try {
+            productoRepository.deleteById((Long)id);
+            return "Fue eliminado copn éxito";
+        } catch (Exception ex){
+            return "No se pudo eliminar,se encontró un error";
+        }
+    }
+
+    @Override
+    public ProductoDto obtenerPorId(Object id) {
+        return null;
+    }
+
+    @Override
+    public  ProductoDto actualizar(ProductoDto object) {return null;}
+}
