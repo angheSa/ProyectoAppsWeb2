@@ -20,7 +20,7 @@ public class RolMapper {
     public static RolEntity mapToEntity(RolDto rolDto){
         RolEntity rolEntity = new RolEntity();
         rolEntity.setNombre(rolDto.getNombre());
-        rolEntity.setEstado(rolDto.getEstado());
+        rolEntity.setEstado(rolDto.isEstado());
         return rolEntity;
     }
 
