@@ -1,11 +1,13 @@
 package com.jma.marketmotor.entity;
 
-import com.jma.marketmotor.utils.EstadoD;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -28,7 +30,7 @@ public class RolEntity {
     private boolean estado;
 
 
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
@@ -40,6 +42,12 @@ public class RolEntity {
 
     )
     private Set<PermisoEntity> permisos = new HashSet<>();
+
+
+    @OneToMany(mappedBy = "rol")
+    @JsonIgnore
+    private Set<UsuarioEntity> usuarios;
+
 
 
     public void agregarPermiso(PermisoEntity permisoEntity) {

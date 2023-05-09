@@ -1,12 +1,14 @@
 package com.jma.marketmotor.controller;
 
+
+import com.jma.marketmotor.api.ProductoResponse;
 import com.jma.marketmotor.api.producto.ProductoCommandInsert;
 import com.jma.marketmotor.api.producto.ProductoCommandUpdate;
 import com.jma.marketmotor.dto.PermisoDto;
 import com.jma.marketmotor.dto.ProductoDto;
 import com.jma.marketmotor.mapping.ProductoMapper;
-import com.jma.marketmotor.service.PermisoService;
 import com.jma.marketmotor.service.ProductoService;
+import com.jma.marketmotor.utils.ConstantsService;
 import com.jma.marketmotor.utils.EstadoD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,10 +35,18 @@ public class ProductoController {
         ProductoDto productoDtoObt = productoService.guardar(ProductoMapper.mapFromCommandInsertToDto(productoCommandInsert));
 
         return ResponseEntity.ok(productoDtoObt);
-        }
-
+    }
 
     @GetMapping
+    public ResponseEntity<List<ProductoDto>> obtenerTodos(){
+
+        List<ProductoDto> productoDtos = productoService.obtenerTodos();
+
+        return ResponseEntity.ok(productoDtos);
+    }
+
+
+    @GetMapping("/{id}")
     public ResponseEntity<ProductoDto> obtenerPorId(@PathVariable Long id){
 
         ProductoDto productoDtoObt = productoService.obtenerPorId(id);
@@ -72,6 +82,16 @@ public class ProductoController {
         String respuesta = productoService.eliminar(id);
 
         return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<ProductoResponse> obtenerTodosPaginados(
+            @RequestParam(value = "pageNo", defaultValue = ConstantsService.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = ConstantsService.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = ConstantsService.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = ConstantsService.DEFAULT_SORT_DIRECTION, required = false) String sortDir
+    ){
+        return ResponseEntity.ok(productoService.obtenerTodosPaginados(pageNo, pageSize, sortBy, sortDir));
     }
 
 }

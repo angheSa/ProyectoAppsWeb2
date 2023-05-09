@@ -36,11 +36,11 @@ public class ProductoMapper {
     public static ProductoDto mapFromCommandInsertToDto(ProductoCommandInsert productoCommandInsert) {
 
         ProductoDto productoDto = new ProductoDto();
-        productoDto.setId(productoCommandInsert.getId());
         productoDto.setTipo(productoCommandInsert.getTipo());
         productoDto.setMarca(productoCommandInsert.getMarca());
         productoDto.setSerial(productoCommandInsert.getSerial());
         productoDto.setDescripcion(productoCommandInsert.getDescripcion());
+        productoDto.declararDisponibilidad(EstadoD.ACTIVO);
         return productoDto;
     }
 

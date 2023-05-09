@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class ProductoCommandInsert {
 
-    private Long id;
-
     private String tipo;
 
     private String marca;

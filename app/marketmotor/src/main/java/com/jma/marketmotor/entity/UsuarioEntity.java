@@ -29,6 +29,9 @@ public class UsuarioEntity {
     @Column(name = "alias_usuario")
     private String alias;
 
+    @Column(name = "contrasena_usuario")
+    private String contrasena;
+
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "actualizado_en")
     @UpdateTimestamp
@@ -47,4 +50,12 @@ public class UsuarioEntity {
 
     @Column(name = "estado")
     private boolean estado;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_rol",updatable = false,nullable = false)
+    private RolEntity rol;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "usuario")
+    private ProveedorEntity proveedor;
 }

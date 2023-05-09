@@ -2,12 +2,8 @@ package com.jma.marketmotor.mapping;
 
 import com.jma.marketmotor.api.permiso.PermisoCommandInsert;
 import com.jma.marketmotor.api.permiso.PermisoCommandUpdate;
-import com.jma.marketmotor.api.rol.RolCommandInsert;
-import com.jma.marketmotor.api.rol.RolCommandUpdate;
 import com.jma.marketmotor.dto.PermisoDto;
-import com.jma.marketmotor.dto.RolDto;
 import com.jma.marketmotor.entity.PermisoEntity;
-import com.jma.marketmotor.entity.RolEntity;
 import com.jma.marketmotor.utils.EstadoD;
 
 public class PermisoMapper {
@@ -37,8 +33,8 @@ public class PermisoMapper {
 
     public static PermisoDto mapFromCommandUpdateToDto(PermisoCommandUpdate permisoCommandUpdate){
         PermisoDto permisoDto = new PermisoDto();
+        permisoDto.setId(permisoCommandUpdate.getId());
         permisoDto.setTipo(permisoCommandUpdate.getTipo());
-        permisoDto.setEstado(permisoCommandUpdate.isEstado());
         return permisoDto;
     }
 

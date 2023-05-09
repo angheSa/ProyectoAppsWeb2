@@ -8,4 +8,5 @@ import lombok.Setter;
 public class RolCommandUpdate {
     private Long id;
     private String nombre;
+    private boolean estado;
 }

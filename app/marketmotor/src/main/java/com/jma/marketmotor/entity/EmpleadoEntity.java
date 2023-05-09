@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_empleado")
@@ -56,11 +57,14 @@ public class EmpleadoEntity {
     @Column(name = "estado")
     private boolean estado;
 
-    @OneToOne()
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
     private UsuarioEntity usuario;
 
 
+    @OneToMany(mappedBy = "empleado")
+    @JsonIgnore
+    private Set<OrdenCompraEntity> ordenesCompra;
 
 
 }
