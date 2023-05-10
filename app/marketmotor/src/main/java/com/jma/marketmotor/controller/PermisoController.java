@@ -78,7 +78,7 @@ public class PermisoController {
                 return ResponseEntity.notFound().build();
 
             permiso.declararDisponibilidad(EstadoD.INACTIVO);
-            permisoService.actualizar(permiso);
+            permisoService.guardar(permiso);
             return ResponseEntity.ok("Se desactivó correctamente");
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
