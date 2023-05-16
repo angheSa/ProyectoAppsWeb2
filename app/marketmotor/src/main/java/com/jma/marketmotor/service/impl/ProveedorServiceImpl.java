@@ -1,11 +1,13 @@
 package com.jma.marketmotor.service.impl;
 
 import com.jma.marketmotor.api.ProveedorResponse;
+import com.jma.marketmotor.dto.DetalleOrdenCompraDto;
 import com.jma.marketmotor.dto.ProveedorDto;
+import com.jma.marketmotor.entity.DetalleOrdenCompraEntity;
+import com.jma.marketmotor.entity.EmpleadoEntity;
 import com.jma.marketmotor.entity.ProveedorEntity;
 import com.jma.marketmotor.entity.UsuarioEntity;
-import com.jma.marketmotor.mapping.ProveedorMapper;
-import com.jma.marketmotor.mapping.UsuarioMapper;
+import com.jma.marketmotor.mapping.*;
 import com.jma.marketmotor.repository.ProveedorRepository;
 import com.jma.marketmotor.repository.UsuarioRepository;
 import com.jma.marketmotor.service.ProveedorService;
@@ -65,7 +67,8 @@ public class ProveedorServiceImpl implements ProveedorService<ProveedorDto> {
 
     @Override
     public List<ProveedorDto> obtenerTodos(){
-        return proveedorRepository.findAll().stream().map(ProveedorMapper::mapToDto).collect(Collectors.toList());
+        List<ProveedorEntity> proveedorEntities = proveedorRepository.findAll();
+        return proveedoresMapeados(proveedorEntities);
     }
 
     @Override
@@ -142,4 +145,5 @@ public class ProveedorServiceImpl implements ProveedorService<ProveedorDto> {
         }
         return content;
     }
+
 }

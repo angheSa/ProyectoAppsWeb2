@@ -1,0 +1,40 @@
+package com.jma.marketmotor.service.userdetails;
+
+import com.jma.marketmotor.dto.RolDto;
+import com.jma.marketmotor.dto.UsuarioDto;
+import com.jma.marketmotor.service.UsuarioService;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+@Service
+@Transactional
+public class MyUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    UsuarioService<UsuarioDto> usuarioService;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        UsuarioDto usuario= usuarioService.getUsuarioByAlias(username);
+        if(usuario==null){
+            return null;
+        }
+        GrantedAuthority rol = new SimpleGrantedAuthority(usuario.getRol().getNombre());
+        List<GrantedAuthority> listaRoles = List.of(rol);
+
+        return new User(usuario.getAlias(), usuario.getContrasena(), listaRoles);
+    }
+
+}
