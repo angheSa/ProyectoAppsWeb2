@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class UsuarioCommandLogin {
 
-    private String username;
+    private String alias;
 
     private String contrasena;
 

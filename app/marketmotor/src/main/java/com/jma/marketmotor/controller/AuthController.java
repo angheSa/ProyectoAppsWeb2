@@ -36,7 +36,7 @@ public class AuthController {
     public ResponseEntity<String> authenticateUser(@RequestBody UsuarioCommandLogin loginCommand) {
 
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginCommand.getUsername(), loginCommand.getContrasena()));
+                .authenticate(new UsernamePasswordAuthenticationToken(loginCommand.getAlias(), loginCommand.getContrasena()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
