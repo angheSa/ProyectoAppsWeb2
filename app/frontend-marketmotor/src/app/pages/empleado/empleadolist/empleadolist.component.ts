@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+declare function setac(): void;
 
 @Component({
   selector: 'app-empleadolist',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./empleadolist.component.css']
 })
 export class EmpleadolistComponent {
+
+  ngOnInit(): void {
+    setac()
+  }
 
 }

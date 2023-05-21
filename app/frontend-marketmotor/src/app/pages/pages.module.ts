@@ -12,6 +12,8 @@ import { ProductolistComponent } from './producto/productolist/productolist.comp
 import { EmpleadoupdateComponent } from './empleado/empleadoupdate/empleadoupdate.component';
 import { EmpleadoinsertComponent } from './empleado/empleadoinsert/empleadoinsert.component';
 import { EmpleadolistComponent } from './empleado/empleadolist/empleadolist.component';
+import { LoginComponent } from './login/login.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 
 
@@ -28,7 +30,9 @@ import { EmpleadolistComponent } from './empleado/empleadolist/empleadolist.comp
     ProductolistComponent,
     EmpleadoupdateComponent,
     EmpleadoinsertComponent,
-    EmpleadolistComponent
+    EmpleadolistComponent,
+    LoginComponent,
+    InicioComponent
   ],
   imports: [
     CommonModule

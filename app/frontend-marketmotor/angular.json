@@ -27,7 +27,12 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/flowbite/dist/flowbite.min.js",
+              "src/assets/styleextra.js"
+            ]
           },
           "configurations": {
             "production": {
