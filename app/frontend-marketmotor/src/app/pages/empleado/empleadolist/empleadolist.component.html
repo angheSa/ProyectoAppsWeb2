@@ -1,7 +1,7 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
+<div class="relative overflow-x-auto shadow-md  mt-10">
+    <table class="w-full text-sm text-left sm:rounded-lg text-gray-500 dark:text-gray-400  ">
+        <thead class="text-xs text-gray-700 uppercase  bg-gray-50 dark:bg-white border border-grey-300 dark:text-gray-400">
+            <tr  class="h-20">
 
                 <th scope="col" class="px-6 py-3">
                     Product name
@@ -20,9 +20,8 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
-            <tr
-                class="accordion bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
+        <tbody id="accordion-flush" data-accordion="collapse" data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white" data-inactive-classes="text-gray-500 dark:text-gray-400">
+            <tr [attr.id]="'accordion-flush-heading-1'" class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer" [attr.data-accordion-target]="'#accordion-flush-body-1'" aria-expanded="false" [attr.aria-controls]="'accordion-flush-body-1'">
                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     Apple MacBook Pro 17"
                 </td>
@@ -39,57 +38,15 @@
                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </td>
             </tr>
-            <tr>
-                <td colspan="5">
-                    <div>
-                        <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                            <p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is an open-source library of
-                                interactive components built on top of Tailwind CSS including buttons, dropdowns,
-                                modals, navbars, and more.</p>
-                            <p class="text-gray-500 dark:text-gray-400">Check out this guide to learn how to <a
-                                    href="/docs/getting-started/introduction/"
-                                    class="text-blue-600 dark:text-blue-500 hover:underline">get started</a> and start
-                                developing websites even faster with components on top of Tailwind CSS.</p>
-                        </div>
-                    </div>
+            <tr [attr.id]="'accordion-flush-body-1'" class="hidden" [attr.aria-labelledby]="'accordion-flush-heading-1'">
+                <td colspan="5" class="p-5 border-b border-gray-200  dark:border-gray-700 dark:bg-gray-900">
+                    <div >
+                        <p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons, dropdowns, modals, navbars, and more.</p>
+                        <p class="text-gray-500 dark:text-gray-400">Check out this guide to learn how to <a href="/docs/getting-started/introduction/" class="text-blue-600 dark:text-blue-500 hover:underline">get started</a> and start developing websites even faster with components on top of Tailwind CSS.</p>
+                      </div>
                 </td>
             </tr>
-            <tr
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
-                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td class="px-6 py-4">
-                    White
-                </td>
-                <td class="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td class="px-6 py-4">
-                    $1999
-                </td>
-                <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-            <tr
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Magic Mouse 2
-                </th>
-                <td class="px-6 py-4">
-                    Black
-                </td>
-                <td class="px-6 py-4">
-                    Accessories
-                </td>
-                <td class="px-6 py-4">
-                    $99
-                </td>
-                <td class="px-6 py-4">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
+            
 
         </tbody>
     </table>

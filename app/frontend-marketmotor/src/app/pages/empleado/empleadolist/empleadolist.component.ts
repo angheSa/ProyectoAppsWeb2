@@ -1,5 +1,18 @@
 import { Component } from '@angular/core';
-declare function setac(): void;
+
+import {
+  initAccordions,
+  initCarousels,
+  initCollapses,
+  initDials,
+  initDismisses,
+  initDrawers,
+  initDropdowns,
+  initModals,
+  initPopovers,
+  initTabs,
+  initTooltips,
+} from 'flowbite';
 
 @Component({
   selector: 'app-empleadolist',
@@ -9,7 +22,17 @@ declare function setac(): void;
 export class EmpleadolistComponent {
 
   ngOnInit(): void {
-    setac()
+    initAccordions();
+    initCarousels();
+    initCollapses();
+    initDials();
+    initDismisses();
+    initDrawers();
+    initDropdowns();
+    initModals();
+    initPopovers();
+    initTabs();
+    initTooltips();
   }
 
 }
