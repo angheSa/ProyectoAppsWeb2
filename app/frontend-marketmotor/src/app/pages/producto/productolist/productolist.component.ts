@@ -1,18 +1,6 @@
 import { Component } from '@angular/core';
 
-import {
-  initAccordions,
-  initCarousels,
-  initCollapses,
-  initDials,
-  initDismisses,
-  initDrawers,
-  initDropdowns,
-  initModals,
-  initPopovers,
-  initTabs,
-  initTooltips,
-} from 'flowbite';
+
 
 @Component({
   selector: 'app-productolist',
@@ -21,18 +9,6 @@ import {
 })
 export class ProductolistComponent {
 
-  ngAfterViewInit(): void {
-    initAccordions();
-    initCarousels();
-    initCollapses();
-    initDials();
-    initDismisses();
-    initDrawers();
-    initDropdowns();
-    initModals();
-    initPopovers();
-    initTabs();
-    initTooltips();
-  }
+
 
 }

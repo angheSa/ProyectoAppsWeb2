@@ -1,18 +1,6 @@
 import { Component } from '@angular/core';
+import { EmpleadoService } from 'src/app/services/empleado/empleado.service';
 
-import {
-  initAccordions,
-  initCarousels,
-  initCollapses,
-  initDials,
-  initDismisses,
-  initDrawers,
-  initDropdowns,
-  initModals,
-  initPopovers,
-  initTabs,
-  initTooltips,
-} from 'flowbite';
 
 @Component({
   selector: 'app-empleadolist',
@@ -21,18 +9,19 @@ import {
 })
 export class EmpleadolistComponent {
 
-  ngAfterViewInit(): void {
-    initAccordions();
-    initCarousels();
-    initCollapses();
-    initDials();
-    initDismisses();
-    initDrawers();
-    initDropdowns();
-    initModals();
-    initPopovers();
-    initTabs();
-    initTooltips();
+  constructor(private empleadoService: EmpleadoService){}
+
+  empleados: any[] = [];
+  ngOnInit():void{
+    this.getAll();
+  }
+
+  getAll(){
+    this.empleadoService.getAll()
+    .subscribe((usuarios : any) => {
+      console.log(usuarios)
+      this.empleados = usuarios
+    })
   }
 
 }
