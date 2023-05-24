@@ -18,6 +18,7 @@ import { ComponentsModule } from './components/components.module';
     PagesModule,
     HttpClientModule,
     ComponentsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
